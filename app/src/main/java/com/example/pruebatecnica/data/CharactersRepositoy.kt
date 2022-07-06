@@ -1,6 +1,6 @@
 package com.example.pruebatecnica.data
 
-import com.example.pruebatecnica.data.model.Characters
+import com.example.pruebatecnica.data.model.Characters.Characters
 import com.example.pruebatecnica.data.network.CharacterService
 import javax.inject.Inject
 

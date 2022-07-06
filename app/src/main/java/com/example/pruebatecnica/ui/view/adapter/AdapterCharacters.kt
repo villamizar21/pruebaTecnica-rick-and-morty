@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pruebatecnica.R
-import com.example.pruebatecnica.data.model.Characters
-import com.example.pruebatecnica.data.model.Result
+import com.example.pruebatecnica.data.model.Characters.Result
 import com.example.pruebatecnica.databinding.ItemCharactersBinding
 
 class AdapterCharacters() :

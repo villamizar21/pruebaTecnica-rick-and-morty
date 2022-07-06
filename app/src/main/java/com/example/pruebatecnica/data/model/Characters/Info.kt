@@ -1,4 +1,4 @@
-package com.example.pruebatecnica.data.model
+package com.example.pruebatecnica.data.model.Characters
 
 data class Info( val count: Long,
                  val pages: Long,
