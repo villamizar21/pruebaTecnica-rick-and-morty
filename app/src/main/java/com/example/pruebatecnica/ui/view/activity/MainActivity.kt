@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.pruebatecnica.R
 import com.example.pruebatecnica.databinding.ActivityMainBinding
 import com.example.pruebatecnica.ui.view.adapter.AdapterCharacters
 import com.example.pruebatecnica.ui.view.interfaceClick.Click
@@ -69,5 +70,6 @@ class MainActivity : AppCompatActivity(), Click {
         val intent = Intent(this, CharacterInfo::class.java)
         intent.putExtra("id", id)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_right,R.anim.silde_right_exit)
     }
 }

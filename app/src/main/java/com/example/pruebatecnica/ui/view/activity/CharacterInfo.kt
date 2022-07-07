@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.pruebatecnica.R
 import com.example.pruebatecnica.data.model.CharacterId.CharacterId
 import com.example.pruebatecnica.databinding.ActivityCharacterInfoBinding
 import com.example.pruebatecnica.ui.viewModel.CharacterIdViewModel
@@ -60,5 +61,10 @@ class CharacterInfo : AppCompatActivity() {
         binding.species.text = "Specie: " + result.species
         binding.status.text = "Status: " + result.status
 
+    }
+
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(R.anim.slide_right, R.anim.silde_right_exit)
     }
 }
