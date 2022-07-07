@@ -11,8 +11,9 @@ import com.bumptech.glide.Glide
 import com.example.pruebatecnica.R
 import com.example.pruebatecnica.data.model.Characters.Result
 import com.example.pruebatecnica.databinding.ItemCharactersBinding
+import com.example.pruebatecnica.ui.view.interfaceClick.Click
 
-class AdapterCharacters() :
+class AdapterCharacters(private val listener: Click) :
     ListAdapter<Result, RecyclerView.ViewHolder>(CharactersDiffCallback()) {
 
     private lateinit var context: Context
@@ -29,6 +30,9 @@ class AdapterCharacters() :
             Glide.with(holder.view)
                 .load(characters.image)
                 .into(binding.moviePoster)
+            binding.moviePoster.setOnClickListener {
+                listener.click(characters.id)
+            }
         }
     }
 

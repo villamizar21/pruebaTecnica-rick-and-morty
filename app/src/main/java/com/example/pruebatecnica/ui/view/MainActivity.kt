@@ -1,5 +1,6 @@
 package com.example.pruebatecnica.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,14 +8,16 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pruebatecnica.R
+import com.example.pruebatecnica.data.model.CharacterId.CharacterId
 import com.example.pruebatecnica.databinding.ActivityMainBinding
 import com.example.pruebatecnica.ui.view.adapter.AdapterCharacters
+import com.example.pruebatecnica.ui.view.interfaceClick.Click
 import com.example.pruebatecnica.ui.viewModel.CharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),Click {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: CharactersViewModel by viewModels()
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapterCharacters = AdapterCharacters()
+        adapterCharacters = AdapterCharacters(this)
         binding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, 2)
@@ -52,5 +55,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.getCharatersViewModel()
         }
+    }
+
+    override fun click(id: Long) {
+
+        val intent = Intent(this, CharacterInfo::class.java)
+        intent.putExtra("id",id)
+        startActivity(intent)
     }
 }
