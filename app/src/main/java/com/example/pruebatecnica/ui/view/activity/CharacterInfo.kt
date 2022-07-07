@@ -1,10 +1,12 @@
-package com.example.pruebatecnica.ui.view
+package com.example.pruebatecnica.ui.view.activity
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.example.pruebatecnica.data.model.CharacterId.CharacterId
 import com.example.pruebatecnica.databinding.ActivityCharacterInfoBinding
 import com.example.pruebatecnica.ui.viewModel.CharacterIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,9 +35,21 @@ class CharacterInfo : AppCompatActivity() {
 
         viewModel.let {
             it.getCharaterId().observe(this) { result ->
-                Log.e("", "info de el personaje////${result}")
+                setupViews(result)
             }
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun setupViews(result: CharacterId) {
+        Glide.with(this)
+            .asBitmap()
+            .load(result.image)
+            .into(binding.imageViewBackdropPath)
+
+        binding.name.text = "Name: " + result.name
+        binding.species.text = "Specie: " + result.species
+        binding.status.text = "Status: " + result.status
+
+    }
 }

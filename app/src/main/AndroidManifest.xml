@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaTecnica">
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name=".ui.view.activity.CharacterInfo"
+            android:theme="@style/Theme.PruebaTecnica.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.activity.MainActivity"
+            android:theme="@style/Theme.PruebaTecnica.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
