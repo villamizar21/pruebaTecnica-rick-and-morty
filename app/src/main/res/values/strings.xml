@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">prueba tecnica</string>
+    <string name="main_error_server">Error en el servidor</string>
 </resources>

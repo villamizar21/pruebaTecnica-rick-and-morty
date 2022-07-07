@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pruebatecnica.R
 import com.example.pruebatecnica.data.model.Characters.Characters
 import com.example.pruebatecnica.domain.CharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,18 +13,28 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CharactersViewModel @Inject constructor(private val charactersUseCase: CharactersUseCase):ViewModel(){
+class CharactersViewModel @Inject constructor(private val charactersUseCase: CharactersUseCase) :
+    ViewModel() {
 
     val results = MutableLiveData<Characters>()
     fun getCharaters(): LiveData<Characters> = results
 
-    suspend fun getCharatersViewModel(){
+    private val snackbarMsg = MutableLiveData<Int>()
+    fun getSnackbarMsg() = snackbarMsg
+
+    private val loaded = MutableLiveData<Boolean>()
+    fun isLoaded() = loaded
+
+    suspend fun getCharatersViewModel() {
         viewModelScope.launch {
             try {
+                loaded.value = false
                 val resultServer = charactersUseCase()
                 results.value = resultServer
             } catch (e: Exception) {
-                Log.e("","error en el servidor ${e.message}")
+                snackbarMsg.value = R.string.main_error_server
+            } finally {
+                loaded.value = true
             }
         }
     }

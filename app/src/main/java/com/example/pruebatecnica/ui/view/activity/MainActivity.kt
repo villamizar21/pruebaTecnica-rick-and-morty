@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,11 +12,12 @@ import com.example.pruebatecnica.databinding.ActivityMainBinding
 import com.example.pruebatecnica.ui.view.adapter.AdapterCharacters
 import com.example.pruebatecnica.ui.view.interfaceClick.Click
 import com.example.pruebatecnica.ui.viewModel.CharactersViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(),Click {
+class MainActivity : AppCompatActivity(), Click {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: CharactersViewModel by viewModels()
@@ -43,8 +45,15 @@ class MainActivity : AppCompatActivity(),Click {
     private fun getCharater() {
         viewModel.let {
             it.getCharaters().observe(this) { result ->
-                Log.e("", "pegelo ñero------> ${result}")
                 adapterCharacters.submitList(result.results)
+            }
+
+            it.getSnackbarMsg().observe(this) { msg ->
+                Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG).show()
+            }
+            it.isLoaded().observe(this) { status ->
+                if (status)
+                    binding.progressBar.visibility = View.GONE
             }
         }
     }
@@ -58,7 +67,7 @@ class MainActivity : AppCompatActivity(),Click {
     override fun click(id: Long) {
 
         val intent = Intent(this, CharacterInfo::class.java)
-        intent.putExtra("id",id)
+        intent.putExtra("id", id)
         startActivity(intent)
     }
 }
