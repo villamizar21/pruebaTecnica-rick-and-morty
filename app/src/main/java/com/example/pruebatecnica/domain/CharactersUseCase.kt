@@ -1,6 +1,6 @@
 package com.example.pruebatecnica.domain
 
-import com.example.pruebatecnica.data.CharactersRepositoy
+import com.example.pruebatecnica.data.repository.CharactersRepositoy
 import com.example.pruebatecnica.data.model.Characters.Characters
 import javax.inject.Inject
 
