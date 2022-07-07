@@ -3,7 +3,6 @@ package com.example.pruebatecnica.ui.view.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +12,11 @@ import com.example.pruebatecnica.databinding.ActivityMainBinding
 import com.example.pruebatecnica.ui.view.adapter.AdapterCharacters
 import com.example.pruebatecnica.ui.view.interfaceClick.Click
 import com.example.pruebatecnica.ui.viewModel.CharactersViewModel
+import com.example.pruebatecnica.utils.Constans.verification
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Click {
@@ -29,9 +30,33 @@ class MainActivity : AppCompatActivity(), Click {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getData()
-        getCharater()
-        setupRecyclerView()
+        verificationNetwork()
+        setupSwipeListener()
+    }
+
+    private fun setupSwipeListener() {
+        val swipe = binding.swipe
+        swipe.setOnRefreshListener {
+            binding.progressBar.isEnabled = false
+            verificationNetwork()
+            swipe.isRefreshing = false
+        }
+    }
+
+    private fun verificationNetwork() {
+        val networkInfo = verification(this)
+        if (!networkInfo) {
+            getData()
+            getCharater()
+            setupRecyclerView()
+        } else {
+            Snackbar.make(
+                binding.root,
+                "Sin Conexión a internet. Desliza hacia abajo  para cargar nuevamente los datos",
+                Snackbar.LENGTH_LONG
+            ).show()
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     private fun setupRecyclerView() {
@@ -70,6 +95,6 @@ class MainActivity : AppCompatActivity(), Click {
         val intent = Intent(this, CharacterInfo::class.java)
         intent.putExtra("id", id)
         startActivity(intent)
-        overridePendingTransition(R.anim.slide_right,R.anim.silde_right_exit)
+        overridePendingTransition(R.anim.slide_right, R.anim.silde_right_exit)
     }
 }
