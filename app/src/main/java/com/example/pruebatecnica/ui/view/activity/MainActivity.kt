@@ -1,10 +1,12 @@
 package com.example.pruebatecnica.ui.view.activity
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pruebatecnica.R
@@ -12,7 +14,7 @@ import com.example.pruebatecnica.databinding.ActivityMainBinding
 import com.example.pruebatecnica.ui.view.adapter.AdapterCharacters
 import com.example.pruebatecnica.ui.view.interfaceClick.Click
 import com.example.pruebatecnica.ui.viewModel.CharactersViewModel
-import com.example.pruebatecnica.utils.Constans.verification
+import com.example.pruebatecnica.utils.Constans.verificationNet
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,8 +46,7 @@ class MainActivity : AppCompatActivity(), Click {
     }
 
     private fun verificationNetwork() {
-        val networkInfo = verification(this)
-        if (!networkInfo) {
+        if (verificationNet(this)) {
             getData()
             getCharater()
             setupRecyclerView()
