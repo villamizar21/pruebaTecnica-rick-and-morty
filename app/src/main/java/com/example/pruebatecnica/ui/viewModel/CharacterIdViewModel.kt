@@ -19,7 +19,7 @@ class CharacterIdViewModel @Inject constructor(private val characterIdUseCase: C
     val result = MutableLiveData<CharacterId>()
     fun getCharaterId(): LiveData<CharacterId> = result
 
-    private val snackbarMsg = MutableLiveData<Int>()
+    private val snackbarMsg = MutableLiveData<String>()
     fun getSnackbarMsg() = snackbarMsg
 
     private val loaded = MutableLiveData<Boolean>()
@@ -32,8 +32,7 @@ class CharacterIdViewModel @Inject constructor(private val characterIdUseCase: C
                 val resultServer = characterIdUseCase.invoke(id)
                 result.value = resultServer
             } catch (e: Exception) {
-                Log.e("","error en el servidor ${e.message}")
-                snackbarMsg.value = R.string.main_error_server
+                snackbarMsg.value = e.message
             }finally {
                 loaded.value = true
             }

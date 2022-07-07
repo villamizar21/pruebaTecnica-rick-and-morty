@@ -19,7 +19,7 @@ class CharactersViewModel @Inject constructor(private val charactersUseCase: Cha
     val results = MutableLiveData<Characters>()
     fun getCharaters(): LiveData<Characters> = results
 
-    private val snackbarMsg = MutableLiveData<Int>()
+    private val snackbarMsg = MutableLiveData<String>()
     fun getSnackbarMsg() = snackbarMsg
 
     private val loaded = MutableLiveData<Boolean>()
@@ -32,7 +32,7 @@ class CharactersViewModel @Inject constructor(private val charactersUseCase: Cha
                 val resultServer = charactersUseCase()
                 results.value = resultServer
             } catch (e: Exception) {
-                snackbarMsg.value = R.string.main_error_server
+                snackbarMsg.value = e.message
             } finally {
                 loaded.value = true
             }
